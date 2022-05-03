@@ -29,7 +29,12 @@ const getFaceImage = async () => {
 const image2video = async () => {
   const message = document.getElementById('message');
   message.innerHTML = 'Loading ffmpeg-core.js';
-  await ffmpeg.load();
+  try {
+    await ffmpeg.load();
+  } catch (e) {
+    alert(e);
+    throw e;
+  }
 
   message.innerHTML = 'Loading data';
   const faceRect = await fetch('src/face_rect.json').then(r => r.json());
@@ -48,7 +53,7 @@ const image2video = async () => {
     const img = await createImageBitmap(new Blob([ffmpeg.FS('readFile', p)], { type: 'image/png' }));
     ctx.drawImage(img, 0, 0);
     if (faceImg && faceRect[i]) {
-      const size = 250;
+      const size = 300;
       const [[x1, y1], [x2, y2]] = faceRect[i];
       if (x1 < x2 && y1 < y2) {
         const [dx, dy] = [(x1 + x2 - size) / 2, (y1 + y2 - size) / 2]
@@ -66,7 +71,7 @@ const image2video = async () => {
   const video = document.getElementById('output-video');
   video.src = URL.createObjectURL(new Blob([data.buffer], { type: 'video/mp4' }));
   ffmpeg.FS('unlink', 'origin.mp4')
-  //Promise.all(frameNames.map(async p => ffmpeg.FS('unlink', p)));
+  frameNames.forEach(async p => ffmpeg.FS('unlink', p));
   logHdlr({ type: 'info', message: 'Finish!' })
 }
 const elm = document.getElementById('start-btn');

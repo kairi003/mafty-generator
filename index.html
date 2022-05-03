@@ -33,13 +33,13 @@
 </head>
 
 <body>
-    <h3>Click start to transcode images to mp4 (x264) and play!</h3>
-    <video id="output-video" controls></video><br />
+    <h1>反省を促すジェネレーター</h1>
     <button id="start-btn">Start</button>
+    <input type="file" id="face"/>
     <p id="message"></p>
     <progress id="progBar" max="1" value="0"></progress>
-    <textarea id="logArea" cols="30" rows="10" readonly></textarea>
-    <input type="file" id="face"/>
+    <textarea id="logArea" cols="30" rows="10" readonly></textarea>    
+    <video id="output-video" controls download="video.mp4"></video>
 </body>
 
 </html>

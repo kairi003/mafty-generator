@@ -1,6 +1,10 @@
 <html>
 
 <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/adjust-editor.css">
+    <script src="/js/adjust-editor.js" defer></script>
     <script src="/coi-serviceworker.min.js" async></script>
     <script src="js/ffmpeg/ffmpeg.min.js" defer></script>
     <script src="js/main.js" defer></script>
@@ -15,6 +19,10 @@
             display: flex;
             flex-direction: column;
             align-items: center;
+        }
+
+        body>* {
+            margin-bottom: 1em;
         }
 
         video {
@@ -34,12 +42,83 @@
 
 <body>
     <h1>反省を促すジェネレーター</h1>
+
+    <h2>注: 空きメモリが3GB程度ある端末でないと動きません!!!</h2>
+
+    <h3>使い方</h3>
+    <ol>
+        <li>画像ファイルを選択</li>
+        <li>スライダーか数値入力でサイズと位置を調整</li>
+        <li>BBやGB等は透過色を指定してチェックで透過可能 (近似色範囲はHSV Range)</li>
+        <li>Startを押すとエンコード開始。待ちます</li>
+        <li>動画が表示されたら成功!!</li>
+        <li>動画下のdownloadボタンでダウンロードできます</li>
+    </ol>
+    
+    <form id="adjustEditor" class="adjust-editor">
+        <canvas id="over" class="over"></canvas>
+        <input id="face" type="file">
+        <button type="reset">Reset</button>
+        <div class="ctrl-container">
+            <label>
+                Size: <input id="sizeNumber" class="size-number" type="number" value="300" name="size" min="1">
+            </label>
+            <input id="sizeSlider" class="size-slider" type="range" value="300" min="1" max="2000" step="1" name="size">
+        </div>
+        <div class="ctrl-container">
+            <label>
+                X: <input id="xNumber" class="pos-number x" type="number" name="x" value="976">
+            </label>
+            <label>
+                Y: <input id="yNumber" class="pos-number y" type="number" name="y" value="315">
+            </label>
+        </div>
+        <div id="transContainer" class="ctrl-container trans-container">
+            <label>
+                透過: <input type="color" id="transColor" class="trans" value="#00FF00">
+            </label>
+            <button type="button" id="pick">pick</button>
+            <input id="transCheck" class="trans" type="checkbox">
+            <input id="transOpen" class="trans-open" type="checkbox">
+            <label for="transOpen" class="trans-open-label"></label>
+            <div id="transOption" class="trans-option">
+                <div>
+                    <label>
+                        H: <input id="hRangeNumber" class="hsv-range-number trans" type="number" max="360" min="0" step="1" name="hRange" value="20">
+                    </label>
+                    <input id="hRangeSlider" class="hsv-range-slider trans" type="range" max="360" min="0" step="1" name="hRange" value="20">
+                </div>
+                <div>
+                    <label>
+                        S: <input id="sRangeNumber" class="hsv-range-number trans" type="number" max="100" min="0" step="1" name="sRange" value="20">
+                    </label>
+                    <input id="sRangeSlider" class="hsv-range-slider trans" type="range" max="100" min="0" step="1" name="sRange" value="20">
+                </div>
+                <div>
+                    <label>
+                        V: <input id="vRangeNumber" class="hsv-range-number trans" type="number" max="100" min="0" step="1" name="vRange" value="20">
+                    </label>
+                    <input id="vRangeSlider" class="hsv-range-slider trans" type="range" max="100" min="0" step="1" name="vRange" value="20">
+                </div>
+            </div>
+        </div>
+        <div class="preview-container ctrl-container">
+            <div class="pos-slider-wrapper x">
+                <input id="xSlider" class="pos-slider x" type="range" name="x" min="0" max="1920" value="976">
+            </div>
+            <div class="pos-slider-wrapper y">
+                <input id="ySlider" class="pos-slider y" type="range" name="y" min="0" max="1080" value="315">
+            </div>
+            <canvas id="preview" class="preview" width="1920" height="1080"></canvas>
+        </div>
+    </form>
+
     <button id="start-btn">Start</button>
-    <input type="file" id="face"/>
     <p id="message"></p>
     <progress id="progBar" max="1" value="0"></progress>
     <textarea id="logArea" cols="30" rows="10" readonly></textarea>    
-    <video id="output-video" controls download="video.mp4"></video>
+    <video id="output-video" controls></video>
+    <a id="video-download" download="mafty.mp4"><button type="button">download</button></a>
 </body>
 
 </html>

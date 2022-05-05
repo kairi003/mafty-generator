@@ -18,15 +18,16 @@ const ffmpeg = createFFmpeg({
 });
 
 const getFaceImage = async () => {
-  const face = document.querySelector('#face');
-  const file = face.files[0];
+  const file = document.querySelector("#face").files[0];
   if (!file) return;
-  const blob = new Blob([await file.arrayBuffer()], { type: file.type });
-  const img = await createImageBitmap(blob);
-  return img;
+  return document.querySelector('#over');
 }
 
 const image2video = async () => {
+  const x0 = +document.querySelector('#xNumber').value - 976;
+  const y0 = +document.querySelector('#yNumber').value - 315;
+  const size = +document.querySelector('#sizeNumber').value;
+
   const message = document.getElementById('message');
   message.innerHTML = 'Loading ffmpeg-core.js';
   try {
@@ -53,10 +54,9 @@ const image2video = async () => {
     const img = await createImageBitmap(new Blob([ffmpeg.FS('readFile', p)], { type: 'image/png' }));
     ctx.drawImage(img, 0, 0);
     if (faceImg && faceRect[i]) {
-      const size = 300;
       const [[x1, y1], [x2, y2]] = faceRect[i];
       if (x1 < x2 && y1 < y2) {
-        const [dx, dy] = [(x1 + x2 - size) / 2, (y1 + y2 - size) / 2]
+        const [dx, dy] = [(x1 + x2 - size) / 2 + x0, (y1 + y2 - size) / 2 + y0]
         ctx.drawImage(faceImg, dx, dy, size, size);
       }
     }
@@ -70,6 +70,7 @@ const image2video = async () => {
   const data = ffmpeg.FS('readFile', 'out.mp4');
   const video = document.getElementById('output-video');
   video.src = URL.createObjectURL(new Blob([data.buffer], { type: 'video/mp4' }));
+  document.getElementById('video-download').href = video.src;
   ffmpeg.FS('unlink', 'origin.mp4')
   frameNames.forEach(async p => ffmpeg.FS('unlink', p));
   logHdlr({ type: 'info', message: 'Finish!' })

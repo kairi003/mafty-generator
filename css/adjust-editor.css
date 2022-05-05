@@ -1,0 +1,126 @@
+html,
+body {
+  margin: auto;
+  background-color: aliceblue;
+}
+.over {
+  display: none;
+}
+body {
+  max-width: 600px;
+  padding: 0.1em 1em;
+  background-color: antiquewhite;
+}
+
+.adjust-editor label {
+  display: inline-block;
+}
+
+.ctrl-container {
+  margin: .5em 0;
+}
+
+.size-number {
+  width: 5em;
+}
+
+.size-slider {
+  width: calc(100% - 10em);
+}
+
+@media screen and (max-width:300px) {
+  .size-slider {
+    width: 100%;
+  }
+}
+
+.trans-open {
+  display: none;
+}
+.trans-open-label::before{
+  content: "HSV Range";
+  text-decoration:underline;
+  font-weight: bold;
+}
+.trans-open-label::after{
+  content: "";
+  display: inline-block;
+  width: 0.7em;
+  height: 0.7em;
+  border: solid 3px black;
+  border-top:none;
+  border-left:none;
+  transform-origin: center;
+  transform: translate(5px, -25%) rotate(45deg);
+}
+.trans-open-label:hover::before{
+  content: "HSV Range";
+  color: blue;
+}
+.trans-open-label:hover::after{
+  content: "";
+  border-color:blue;
+}
+.trans-open:checked ~ .trans-open-label::after{
+  content: "";
+  transform: scale(1, -1) translate(5px, -25%) rotate(45deg);
+}
+
+.trans-option {
+  display: none;
+}
+.trans-open:checked ~ .trans-option {
+  display: block;
+}
+
+.hsv-range-number {
+  width: 4em;
+}
+
+.hsv-range-slider {
+  width: calc(100% - 10em);
+}
+
+
+.pos-number {
+  width: 8em;
+}
+
+.preview-container {
+  position: relative;
+  padding: 10px 0 0 10px;
+  box-sizing: border-box;
+  width: 100%;
+}
+
+.pos-slider-wrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 10px;
+}
+
+.pos-slider-wrapper.x {
+  padding-left: calc(100% - 10px);
+  left: 10px;
+}
+
+.pos-slider-wrapper.y {
+  padding-left: calc((100% - 10px) * 9 / 16);
+  transform-origin: left bottom;
+  transform: rotate(90deg);
+}
+
+.pos-slider {
+  position: absolute;
+  margin: 0;
+  border: 0;
+  padding: 0;
+  inset: 0;
+}
+
+.preview {
+  width: 100%;
+  background-size: contain;
+  background-image: url('0001.png');
+}

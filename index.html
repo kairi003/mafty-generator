@@ -3,41 +3,13 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://unpkg.com/modern-css-reset/dist/reset.min.css" />
+    <link rel="stylesheet" href="/css/style.css">
     <link rel="stylesheet" href="/css/adjust-editor.css">
-    <script src="/js/adjust-editor.js" defer></script>
-    <script src="/coi-serviceworker.min.js" async></script>
+    <script src="js/adjust-editor.js" defer></script>
+    <script src="coi-serviceworker.min.js" async></script>
     <script src="js/ffmpeg/ffmpeg.min.js" defer></script>
     <script src="js/main.js" defer></script>
-    <style>
-        html,
-        body {
-            margin: 0 auto;
-        }
-
-        body {
-            max-width: 500px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        body>* {
-            margin-bottom: 1em;
-        }
-
-        video {
-            width: 100%;
-        }
-
-        progress {
-            width: 100%;
-        }
-
-        #logArea {
-            resize: vertical;
-            width: 100%;
-        }
-    </style>
 </head>
 
 <body>

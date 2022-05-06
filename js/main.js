@@ -37,8 +37,10 @@ const image2video = async () => {
   try {
     await ffmpeg.load();
   } catch (e) {
-    alert(e);
-    throw e;
+    if (!e.message || !e.message.startsWith('ffmpeg.wasm was loaded')) {
+      alert(e);
+      throw e;
+    }
   }
 
   message.innerHTML = 'Loading data';
@@ -78,7 +80,7 @@ const image2video = async () => {
   video.src = URL.createObjectURL(new Blob([data.buffer], { type: 'video/mp4' }));
   document.getElementById('video-download').href = video.src;
   ffmpeg.FS('unlink', 'origin.mp4')
-  frameNames.forEach(async p => ffmpeg.FS('unlink', p));
+  frameNames.forEach(p => ffmpeg.FS('unlink', p));
   logHdlr({ type: 'info', message: 'Finish!' })
 }
 const elm = document.getElementById('start-btn');

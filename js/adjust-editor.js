@@ -5,8 +5,8 @@ const rgb2hsv = (r, g, b) => {
   const min = Math.min(r, g, b);
   const _h = (r == g && g == b) ? 0 :
              (r >= g && r >= b) ? (g - b) / (max - min) :
-             (g >= b && g >= r) ? (g - b) / (max - min) + 2 :
-             (b >= r && b >= g) ? (g - b) / (max - min) + 4 : 0;
+             (g >= b && g >= r) ? (b - r) / (max - min) + 2 :
+             (b >= r && b >= g) ? (r - g) / (max - min) + 4 : 0;
   const h = (60 * _h + 360) % 360;
   const s = (max > 0) ? (max - min) / max * 100 : 0;
   const v = max * 100 / 255;

@@ -54,14 +54,21 @@ const readImage = async e => {
 const draw = async () => {
   const img = document.querySelector('#over');
 
-  const x = +document.querySelector('#xNumber').value;
-  const y = +document.querySelector('#yNumber').value;
-  const size = +document.querySelector('#sizeNumber').value;
+  const x = parseInt(document.querySelector('#xNumber').value);
+  const y = parseInt(document.querySelector('#yNumber').value);
+  const size = parseInt(document.querySelector('#sizeNumber').value);
 
   const canvas = document.querySelector('#preview');
   const ctx = canvas.getContext('2d');
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   ctx.drawImage(img, x - size/2, y - size/2, size, size);
+
+  const logo = document.querySelector('#logo');
+  const logoImg = document.querySelector('#logoImg');
+  if (logo.checked) ctx.drawImage(logoImg, 0, 0, 1920, 1080);
+  const mark = document.querySelector('#mark');
+  const markImg = document.querySelector('#markImg');
+  if (mark.checked) ctx.drawImage(markImg, 0, 0, 1920, 1080);
 }
 
 document.querySelectorAll('#face, #transContainer').forEach(e=>e.addEventListener('change', readImage));

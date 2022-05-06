@@ -24,9 +24,13 @@ const getFaceImage = async () => {
 }
 
 const image2video = async () => {
-  const x0 = +document.querySelector('#xNumber').value - 976;
-  const y0 = +document.querySelector('#yNumber').value - 315;
-  const size = +document.querySelector('#sizeNumber').value;
+  const x0 = parseInt(document.querySelector('#xNumber').value) - 976;
+  const y0 = parseInt(document.querySelector('#yNumber').value) - 315;
+  const size = parseInt(document.querySelector('#sizeNumber').value);
+  const logoEnabled = document.querySelector('#logo').checked;
+  const logoImg = document.querySelector('#logoImg');
+  const markEnabled = document.querySelector('#mark').checked;
+  const markImg = document.querySelector('#markImg');
 
   const message = document.getElementById('message');
   message.innerHTML = 'Loading ffmpeg-core.js';
@@ -60,6 +64,8 @@ const image2video = async () => {
         ctx.drawImage(faceImg, dx, dy, size, size);
       }
     }
+    if (logoEnabled) ctx.drawImage(logoImg, 0, 0, 1920, 1080);
+    if (markEnabled) ctx.drawImage(markImg, 0, 0, 1920, 1080);
     const blob = await new Promise(r => canvas.toBlob(r, { type: 'image/png' }));
     ffmpeg.FS('writeFile', p, new Uint8Array(await blob.arrayBuffer()));
     progHdlr({ ratio: (1 + +i) / frameNames.length });

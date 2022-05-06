@@ -1,17 +1,3 @@
-html,
-body {
-  margin: auto;
-  background-color: aliceblue;
-}
-.over {
-  display: none;
-}
-body {
-  max-width: 600px;
-  padding: 0.1em 1em;
-  background-color: antiquewhite;
-}
-
 .adjust-editor label {
   display: inline-block;
 }
@@ -122,5 +108,9 @@ body {
 .preview {
   width: 100%;
   background-size: contain;
-  background-image: url('0001.png');
+  background-image: url('../src/0001.png');
+}
+
+.hidden {
+  display: none;
 }

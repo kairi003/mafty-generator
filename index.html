@@ -3,6 +3,14 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:site" content="@kairi_005">
+    <meta property="og:url" content="https://kairi003.github.io/mafty-generator/">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="mafty-generator">
+    <meta property="og:description" content="反省を促すジェネレーター">
+    <meta property="og:image" content="https://kairi003.github.io/deepl_unlocker/img/thumbnail.png">
+
     <link rel="stylesheet" href="https://unpkg.com/modern-css-reset/dist/reset.min.css" />
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/adjust-editor.css">
@@ -10,6 +18,7 @@
     <script src="/coi-serviceworker.min.js" async></script>
     <script src="js/ffmpeg/ffmpeg.min.js" defer></script>
     <script src="js/main.js" defer></script>
+    <title>mafty-generator</title>
 </head>
 
 <body>
@@ -17,18 +26,20 @@
 
     <h2>注: 空きメモリが3GB程度ある端末でないと動きません!!!</h2>
 
-    <h3>使い方</h3>
-    <ol>
-        <li>画像ファイルを選択</li>
-        <li>スライダーか数値入力でサイズと位置を調整</li>
-        <li>BBやGB等は透過色を指定してチェックで透過可能 (近似色範囲はHSV Range)</li>
-        <li>Startを押すとエンコード開始。待ちます</li>
-        <li>動画が表示されたら成功!!</li>
-        <li>動画下のdownloadボタンでダウンロードできます</li>
-    </ol>
-    
+    <div class="container">
+        <h3>使い方</h3>
+        <ol>
+            <li>画像ファイルを選択</li>
+            <li>スライダーか数値入力でサイズと位置を調整</li>
+            <li>BBやGB等は透過色を指定してチェックで透過可能 (近似色範囲はHSV Rangeから調整)</li>
+            <li>Logo/Markでロゴなどを追加</li>
+            <li>Startを押すとエンコード開始。待ちます</li>
+            <li>動画が表示されたら成功!!</li>
+            <li>動画下のdownloadボタンでダウンロードできます</li>
+        </ol>
+    </div>
+
     <form id="adjustEditor" class="adjust-editor">
-        <canvas id="over" class="over"></canvas>
         <input id="face" type="file">
         <button type="reset">Reset</button>
         <div class="ctrl-container">
@@ -56,23 +67,33 @@
             <div id="transOption" class="trans-option">
                 <div>
                     <label>
-                        H: <input id="hRangeNumber" class="hsv-range-number trans" type="number" max="360" min="0" step="1" name="hRange" value="20">
+                        H: <input id="hRangeNumber" class="hsv-range-number trans" type="number" max="360" min="0"
+                            step="1" name="hRange" value="20">
                     </label>
-                    <input id="hRangeSlider" class="hsv-range-slider trans" type="range" max="360" min="0" step="1" name="hRange" value="20">
+                    <input id="hRangeSlider" class="hsv-range-slider trans" type="range" max="360" min="0" step="1"
+                        name="hRange" value="20">
                 </div>
                 <div>
                     <label>
-                        S: <input id="sRangeNumber" class="hsv-range-number trans" type="number" max="100" min="0" step="1" name="sRange" value="20">
+                        S: <input id="sRangeNumber" class="hsv-range-number trans" type="number" max="100" min="0"
+                            step="1" name="sRange" value="20">
                     </label>
-                    <input id="sRangeSlider" class="hsv-range-slider trans" type="range" max="100" min="0" step="1" name="sRange" value="20">
+                    <input id="sRangeSlider" class="hsv-range-slider trans" type="range" max="100" min="0" step="1"
+                        name="sRange" value="20">
                 </div>
                 <div>
                     <label>
-                        V: <input id="vRangeNumber" class="hsv-range-number trans" type="number" max="100" min="0" step="1" name="vRange" value="20">
+                        V: <input id="vRangeNumber" class="hsv-range-number trans" type="number" max="100" min="0"
+                            step="1" name="vRange" value="20">
                     </label>
-                    <input id="vRangeSlider" class="hsv-range-slider trans" type="range" max="100" min="0" step="1" name="vRange" value="20">
+                    <input id="vRangeSlider" class="hsv-range-slider trans" type="range" max="100" min="0" step="1"
+                        name="vRange" value="20">
                 </div>
             </div>
+        </div>
+        <div class="ctrl-container">
+            <label>Logo: <input type="checkbox" id="logo"></label>
+            <label>Mark: <input type="checkbox" id="mark"></label>
         </div>
         <div class="preview-container ctrl-container">
             <div class="pos-slider-wrapper x">
@@ -83,14 +104,26 @@
             </div>
             <canvas id="preview" class="preview" width="1920" height="1080"></canvas>
         </div>
+        <div class="hidden">
+            <canvas id="over" class="over"></canvas>
+            <img id="logoImg" src="src/logo.png">
+            <img id="markImg" src="src/mark.png">
+        </div>
     </form>
 
-    <button id="start-btn">Start</button>
-    <p id="message"></p>
-    <progress id="progBar" max="1" value="0"></progress>
-    <textarea id="logArea" cols="30" rows="10" readonly></textarea>    
-    <video id="output-video" controls></video>
-    <a id="video-download" download="mafty.mp4"><button type="button">download</button></a>
+    <div class="container">
+        <button id="start-btn">Start</button>
+        <p id="message"></p>
+        <progress id="progBar" max="1" value="0"></progress>
+        <textarea id="logArea" cols="30" rows="10" readonly></textarea>
+        <video id="output-video" controls></video>
+        <a id="video-download" download="mafty.mp4"><button type="button">download</button></a>
+    </div>
+
+    <footer>
+        <h3>Author</h3>
+        <a href="https://twitter.com/kairi_005">kairi</a>
+    </footer>
 </body>
 
 </html>

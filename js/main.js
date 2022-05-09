@@ -62,12 +62,12 @@ const image2video = async () => {
     if (faceImg && faceRect[i]) {
       const [[x1, y1], [x2, y2]] = faceRect[i];
       if (x1 < x2 && y1 < y2) {
-        const [dx, dy] = [(x1 + x2 - size) / 2 + x0, (y1 + y2 - size) / 2 + y0]
+        const [dx, dy] = [(x1 + x2 - size) / 2 + x0, (y1 + y2 - size) / 2 + y0];
         ctx.drawImage(faceImg, dx, dy, size, size);
       }
     }
-    if (logoEnabled) ctx.drawImage(logoImg, 0, 0, 1920, 1080);
-    if (markEnabled) ctx.drawImage(markImg, 0, 0, 1920, 1080);
+    if (logoEnabled && i < (frameNames.length - 1)) ctx.drawImage(logoImg, 0, 0, 1920, 1080);
+    if (markEnabled && i < (frameNames.length - 1)) ctx.drawImage(markImg, 0, 0, 1920, 1080);
     const blob = await new Promise(r => canvas.toBlob(r, { type: 'image/png' }));
     ffmpeg.FS('writeFile', p, new Uint8Array(await blob.arrayBuffer()));
     progHdlr({ ratio: (1 + +i) / frameNames.length });
@@ -80,7 +80,7 @@ const image2video = async () => {
   video.src = URL.createObjectURL(new Blob([data.buffer], { type: 'video/mp4' }));
   document.getElementById('video-download').href = video.src;
   ffmpeg.FS('unlink', 'origin.mp4')
-  frameNames.forEach(p => ffmpeg.FS('unlink', p));
+  for ( let p of frameNames ) ffmpeg.FS('unlink', p);
   logHdlr({ type: 'info', message: 'Finish!' })
 }
 const elm = document.getElementById('start-btn');

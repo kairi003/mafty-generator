@@ -79,8 +79,8 @@ const image2video = async () => {
   const video = document.getElementById('output-video');
   video.src = URL.createObjectURL(new Blob([data.buffer], { type: 'video/mp4' }));
   document.getElementById('video-download').href = video.src;
-  ffmpeg.FS('unlink', 'origin.mp4')
-  for ( let p of frameNames ) ffmpeg.FS('unlink', p);
+  await ffmpeg.FS('unlink', 'origin.mp4')
+  for ( let p of frameNames ) await ffmpeg.FS('unlink', p);
   logHdlr({ type: 'info', message: 'Finish!' })
 }
 const elm = document.getElementById('start-btn');

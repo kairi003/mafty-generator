@@ -28,7 +28,8 @@ progress {
   width: 100%;
 }
 
-#logArea {
+.log-area {
   resize: vertical;
   width: 100%;
+  font-family: monospace;
 }

@@ -33,16 +33,11 @@ const readImage = async e => {
     const vr = +document.querySelector('#vRangeNumber').value;
     const imageData = ctx.getImageData(0, 0, s, s);
     const pixel = imageData.data;
-    console.log(pixel.length);
     for (let i=0; i<pixel.length; i+=4) {
       const [h, s, v] = rgb2hsv(...pixel.slice(i,i+3));
       const dh = Math.abs(h - th);
       const ds = Math.abs(s - ts);
       const dv = Math.abs(v - tv);
-      if (isNaN(dh)) {
-        console.log(pixel.slice(i,i+3), [th, ts, tv]);
-        return;
-      }
       if ((Math.min(dh, 360 - dh) <= hr) && (ds <= sr) && (dv <= vr)) pixel[i+3] = 0;
     }
     ctx.clearRect(0, 0, s, s);

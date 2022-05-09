@@ -12,7 +12,7 @@ const progHdlr = p => {
 const { createFFmpeg, fetchFile } = FFmpeg;
 const ffmpeg = createFFmpeg({
   corePath: 'js/core/ffmpeg-core.js',
-  log: false,
+  log: true,
   logger: logHdlr,
   progress: progHdlr
 });

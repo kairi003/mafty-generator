@@ -46,7 +46,7 @@ const image2video = async () => {
   message.innerHTML = 'Loading data';
   const faceRect = await fetch('src/face_rect.json').then(r => r.json());
   ffmpeg.FS('writeFile', 'origin.mp4', await fetchFile('src/origin.mp4'));
-  await ffmpeg.run('-i', 'origin.mp4', '-an', '-c:v', 'png', '%04d.png');
+  await ffmpeg.run('-i', 'origin.mp4', '-an', '-c:v', 'png', '-pred', 'mixed', '-pix_fmt', 'rgb24', '-sws_flags','+accurate_rnd+full_chroma_int', '%04d.png');
 
   message.innerHTML = 'Rewrite data';
   const frameNames = ffmpeg.FS('readdir', '.').filter(p => p.endsWith('.png'));
@@ -74,14 +74,23 @@ const image2video = async () => {
   };
 
   message.innerHTML = 'Start transcoding';
-  await ffmpeg.run('-framerate', '29.97', '-pattern_type', 'glob', '-i', '*.png', '-i', 'origin.mp4', '-c:v', 'libx264', '-c:a', 'copy', '-map', '0:v', '-map', '1:a', '-pix_fmt', 'yuv420p', 'out.mp4');
+  await ffmpeg.run('-framerate', '29.97',
+  '-pattern_type', 'glob', '-i', '*.png', '-i', 'origin.mp4',
+  '-c:v', 'libx264', '-c:a', 'copy',
+  '-map', '0:v', '-map', '1:a',
+  '-x264-params', 'keyint=15:no-deblock=1',
+  '-pix_fmt', 'yuv420p',
+  '-sws_flags', 'spline+accurate_rnd+full_chroma_int',
+  '-vf', 'colorspace=bt709:iall=bt601-6-625:fast=1',
+  '-color_range', 'tv', '-colorspace', 'bt709', '-color_primaries', 'bt709', '-color_trc', 'bt709',
+  'out.mp4');
   const data = ffmpeg.FS('readFile', 'out.mp4');
   const video = document.getElementById('output-video');
   video.src = URL.createObjectURL(new Blob([data.buffer], { type: 'video/mp4' }));
   document.getElementById('video-download').href = video.src;
   await ffmpeg.FS('unlink', 'origin.mp4')
   for ( let p of frameNames ) await ffmpeg.FS('unlink', p);
-  logHdlr({ type: 'info', message: 'Finish!' })
+  logHdlr({ type: 'info', message: 'Finish!' });
 }
 const elm = document.getElementById('start-btn');
 elm.addEventListener('click', image2video);

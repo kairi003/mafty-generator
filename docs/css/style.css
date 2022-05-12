@@ -28,7 +28,7 @@ progress {
   width: 100%;
   font-family: monospace;
   background-color: black;
-  font: lightgray;
+  color: lightgray;
 }
 
 .twitter-share-button button {

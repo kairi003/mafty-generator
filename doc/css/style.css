@@ -1,10 +1,5 @@
 html,
 body {
-  margin: 0 auto;
-}
-
-html,
-body {
   margin: auto;
   background-color: aliceblue;
 }
@@ -32,4 +27,13 @@ progress {
   resize: vertical;
   width: 100%;
   font-family: monospace;
+  background-color: black;
+  font: lightgray;
+}
+
+.twitter-share-button button {
+  background-color: #1DA1F2;
+  color: white;
+  border-color: white;
+  border-radius: 1em;
 }

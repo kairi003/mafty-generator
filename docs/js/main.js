@@ -18,19 +18,19 @@ const ffmpeg = createFFmpeg({
 });
 
 const getFilterComplex = async () => {
-  const faceRect = await fetch('src/face_rect.json').then(r => r.json());
+  const faceCorrd = await fetch('src/face_coord.json').then(r => r.json());
   const x0 = parseInt(document.querySelector('#xNumber').value) - 976;
   const y0 = parseInt(document.querySelector('#yNumber').value) - 315;
   const size = parseInt(document.querySelector('#sizeNumber').value);
   const logoEnabled = document.querySelector('#logo').checked;
   const markEnabled = document.querySelector('#mark').checked;
-  const overlayX = faceRect.map(([[x1, y1], [x2, y2]], i) => `eq(n,${i + 1})*${(x1 < x2) ? (x1 + x2 - size) / 2 + x0 : 'W'}`).join('+');
-  const overlayY = faceRect.map(([[x1, y1], [x2, y2]], i) => `eq(n,${i + 1})*${(y1 < y2) ? (y1 + y2 - size) / 2 + y0 : 'H'}`).join('+');
+  const overlayX = faceCorrd.map(([x, y], i) => `eq(n,${i + 1})*${x + x0 - size/2}`).join('+');
+  const overlayY = faceCorrd.map(([x, y], i) => `eq(n,${i + 1})*${y + y0 - size/2}`).join('+');
   const filter = [
     `[1:v]scale=${size}:${size}[face]`,
-    `[0:v][face]overlay=x='${overlayX}':y='${overlayY}':enable='lt(n,${faceRect.length})'[overFace]`,
-    `[overFace][2:v]overlay=enable='lt(n,${faceRect.length})*${+logoEnabled}'[overLogo]`,
-    `[overLogo][3:v]overlay=enable='lt(n,${faceRect.length})*${+markEnabled}'`
+    `[0:v][face]overlay=x='${overlayX}':y='${overlayY}':enable='lt(n,${faceCorrd.length})'[overFace]`,
+    `[overFace][2:v]overlay=enable='lt(n,${faceCorrd.length})*${+logoEnabled}'[overLogo]`,
+    `[overLogo][3:v]overlay=enable='lt(n,${faceCorrd.length})*${+markEnabled}'`
   ];
   return filter;
 }

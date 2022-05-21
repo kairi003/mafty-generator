@@ -18,7 +18,7 @@ const readImage = async e => {
   const file = face.files[0];
   if (!file) return;
   const blob = new Blob([await file.arrayBuffer()], { type: file.type });
-  const img = await createImageBitmap(blob);  
+  const img = await createImageBitmap(blob);
   const canvas = document.querySelector('#over');
   const s = over.width = over.height = Math.max(img.width, img.height);
   const ctx = canvas.getContext('2d');

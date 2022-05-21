@@ -37,3 +37,11 @@ progress {
   border-color: white;
   border-radius: 1em;
 }
+
+.red {
+  color: red;
+}
+.strike {
+  font-weight: normal;
+  text-decoration: line-through;
+}

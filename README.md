@@ -4,13 +4,15 @@
 https://kairi003.github.io/mafty-generator/
 
 
-## What is this?
+## What is this
 
 反省を促す動画を簡単に生成できるツールです。
 
 本ツールはWebAssemblyで実装されブラウザ上で動作するffmpegである[ffmpeg.wasm](https://github.com/ffmpegwasm/ffmpeg.wasm)を利用しています。
 
-ただしffmpeg.wasmの仕様で、1.5GB程度の空きメモリを必要とするため多くのモバイル環境では動作しません。
+ただしffmpeg.wasmの仕様で、1~1.5GB程度の空きメモリを必要とするため多くのモバイル環境では動作しません。
+
+メモリ不足である旨の警告が表示された場合は他のタブやアプリを閉じてから試してみてください。
 
 またffmpeg.wasmで利用するSharedArrayBuffuerはCOOP/COEPヘッダを必要とするため、[coi-serviceworker](https://github.com/gzuidhof/coi-serviceworker)でサービスワーカーにリロードしてもらっています。
 
@@ -25,3 +27,10 @@ Issue, PullRequest歓迎です。
 1. Startを押すとエンコード開始。待ちます
 1. 動画が表示されたら成功!!
 1. 動画下のdownloadボタンでダウンロードできます
+
+
+## Verified Mobile Devices
+| Name |  OS  | Memory | Browser |
+| ---- | ---- | ----   | ----    |
+| Galaxy S8 | Android 9 | 4 GB | Chrome |
+| iPad (9th) | iPadOS 15 | 3 GB | Chrome, Safari|

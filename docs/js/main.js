@@ -24,11 +24,13 @@ const getFilterComplex = async () => {
   const size = parseInt(document.querySelector('#sizeNumber').value);
   const logoEnabled = document.querySelector('#logo').checked;
   const markEnabled = document.querySelector('#mark').checked;
-  const overlayX = faceCorrd.map(([x, y], i) => `eq(n,${i + 1})*${x + x0 - size/2}`).join('+');
-  const overlayY = faceCorrd.map(([x, y], i) => `eq(n,${i + 1})*${y + y0 - size/2}`).join('+');
+  const overlayX = faceCorrd.map(([x, y], i) => `eq(n,${i + 1})*${x + x0 - size/2}`);
+  const overlayY = faceCorrd.map(([x, y], i) => `eq(n,${i + 1})*${y + y0 - size/2}`);
   const filter = [
-    `[1:v]scale=${size}:${size}[face]`,
-    `[0:v][face]overlay=x='${overlayX}':y='${overlayY}':enable='lt(n,${faceCorrd.length})'[overFace]`,
+    `[1:v]scale=${size}:${size},split=3[face][face2][face3]`,
+    `[0:v][face]overlay=x='${overlayX.slice(  0,251).join('+')}':y='${overlayY.slice(  0,251).join('+')}':enable='lte(n,250)'[t1]`,
+    `[t1][face2]overlay=x='${overlayX.slice(249,501).join('+')}':y='${overlayY.slice(249,501).join('+')}':enable='between(n,250,500)'[t2]`,
+    `[t2][face3]overlay=x='${overlayX.slice(499    ).join('+')}':y='${overlayY.slice(499    ).join('+')}':enable='gte(n,500)'[overFace]`,
     `[overFace][2:v]overlay=enable='lt(n,${faceCorrd.length})*${+logoEnabled}'[overLogo]`,
     `[overLogo][3:v]overlay=enable='lt(n,${faceCorrd.length})*${+markEnabled}'`
   ];

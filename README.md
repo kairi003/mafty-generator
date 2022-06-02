@@ -10,7 +10,7 @@ https://kairi003.github.io/mafty-generator/
 
 本ツールはWebAssemblyで実装されブラウザ上で動作するffmpegである[ffmpeg.wasm](https://github.com/ffmpegwasm/ffmpeg.wasm)を利用しています。
 
-ただしffmpeg.wasmの仕様で、1~1.5GB程度の空きメモリを必要とするため多くのモバイル環境では動作しません。
+ただしffmpeg.wasmの仕様で、1GB程度の空きメモリを必要とします。
 
 メモリ不足である旨の警告が表示された場合は他のタブやアプリを閉じてから試してみてください。
 

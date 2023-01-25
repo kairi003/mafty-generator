@@ -16,7 +16,12 @@ const rgb2hsv = (r, g, b) => {
 const readImage = async e => {
   const face = document.querySelector('#face');
   const file = face.files[0];
-  if (!file) return;
+  if (e.type == 'reset' || !file) {
+    const canvas = document.querySelector('#preview');
+    const ctx = canvas.getContext('2d');
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    return;
+  }
   const blob = new Blob([await file.arrayBuffer()], { type: file.type });
   const img = await createImageBitmap(blob);
   const canvas = document.querySelector('#over');

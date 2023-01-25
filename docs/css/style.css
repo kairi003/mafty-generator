@@ -45,3 +45,13 @@ progress {
   font-weight: normal;
   text-decoration: line-through;
 }
+
+button {
+  cursor: pointer;
+}
+.bgm-param {
+  width: 5em;
+}
+.input-container, .input-container>* {
+  margin: 5px;
+}

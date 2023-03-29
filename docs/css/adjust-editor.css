@@ -20,45 +20,6 @@
   }
 }
 
-.trans-open {
-  display: none;
-}
-.trans-open-label::before{
-  content: "HSV Range";
-  text-decoration:underline;
-  font-weight: bold;
-}
-.trans-open-label::after{
-  content: "";
-  display: inline-block;
-  width: 0.7em;
-  height: 0.7em;
-  border: solid 3px black;
-  border-top:none;
-  border-left:none;
-  transform-origin: center;
-  transform: translate(5px, -25%) rotate(45deg);
-}
-.trans-open-label:hover::before{
-  content: "HSV Range";
-  color: blue;
-}
-.trans-open-label:hover::after{
-  content: "";
-  border-color:blue;
-}
-.trans-open:checked ~ .trans-open-label::after{
-  content: "";
-  transform: scale(1, -1) translate(5px, -25%) rotate(45deg);
-}
-
-.trans-option {
-  display: none;
-}
-.trans-open:checked ~ .trans-option {
-  display: block;
-}
-
 .hsv-range-number {
   width: 4em;
 }
@@ -113,4 +74,13 @@
 
 .hidden {
   display: none;
+}
+
+summary {
+  cursor: pointer;
+}
+
+.h3-summary {
+  font-size: 1.5em;
+  font-weight: bold;
 }

@@ -32,5 +32,6 @@ Issue, PullRequest歓迎です。
 ## Verified Mobile Devices
 | Name |  OS  | Memory | Browser |
 | ---- | ---- | ----   | ----    |
-| Galaxy S8 | Android 9 | 4 GB | Chrome |
+| Galaxy S8 | Android 9  | 4 GB | Chrome |
+| Pixel 7   | Android 13 | 8 GB | Chrome |
 | iPad (9th) | iPadOS 15 | 3 GB | Chrome, Safari|

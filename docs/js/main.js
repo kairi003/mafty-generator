@@ -70,7 +70,7 @@ const image2video = async () => {
 
   const bgmBuffer = await document.querySelector('#bgm').files[0]?.arrayBuffer();
   if (bgmBuffer) ffmpeg.FS('writeFile', 'bgm.mp4', new Uint8Array(bgmBuffer));
-  const ss = document.querySelector('#bgmStart').value;
+  const ss = document.querySelector('#bgmStart').value ?? '0';
 
   message.innerHTML = 'Start transcoding';
   await ffmpeg.run(

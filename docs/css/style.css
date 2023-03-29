@@ -31,13 +31,6 @@ progress {
   color: lightgray;
 }
 
-.twitter-share-button button {
-  background-color: #1DA1F2;
-  color: white;
-  border-color: white;
-  border-radius: 1em;
-}
-
 .red {
   color: red;
 }
@@ -54,4 +47,39 @@ button {
 }
 .input-container, .input-container>* {
   margin: 5px;
+}
+
+.attention::before {
+  content: "!!";
+}
+
+a.button {
+  display: inline-block;
+  writing-mode: horizontal-tb !important;
+  text-align: center;
+  padding: 1px 6px;
+  background-color: buttonface;
+  color: buttontext;
+  text-align: center;
+  text-decoration: none;
+  border: 2px outset buttonborder;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+a.button:hover {
+  filter: brightness(0.9);
+}
+
+a.button:active {
+  filter: brightness(1.1);
+}
+
+a.button.twitter-share-button {
+  padding: 1px 10px;
+  background-color: #1DA1F2;
+  text-decoration: none;
+  color: white;
+  border-color: white;
+  border-radius: 1em;
 }

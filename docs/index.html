@@ -25,22 +25,34 @@
 
 <body>
     <h1>反省を促すジェネレーター</h1>
-
-    <h2>注: 空きメモリが<span class="red">1~1.5GB</span>程度ある端末でないと動きません</h2>
-    <a href="https://github.com/kairi003/mafty-generator#verified-mobile-devices">動作確認済みモバイル端末</a>
-    <a href="https://twitter.com/intent/tweet?url=https://kairi003.github.io/mafty-generator/&hashtags=%E5%8F%8D%E7%9C%81%E3%82%92%E4%BF%83%E3%81%99%E3%82%B8%E3%82%A7%E3%83%8D%E3%83%AC%E3%83%BC%E3%82%BF%E3%83%BC,mafty_generator" class="twitter-share-button" target="_new" target="_new"><button type="button">tweet</button></a>
+    <aside role="note" class="attention">
+        デバイスのメモリサイズにより動作しない場合があります。<br />
+        <a href="https://github.com/kairi003/mafty-generator#verified-mobile-devices" target="_new">動作確認済みモバイル端末</a>
+        <a href="https://twitter.com/intent/tweet?url=https://kairi003.github.io/mafty-generator/&hashtags=%E5%8F%8D%E7%9C%81%E3%82%92%E4%BF%83%E3%81%99%E3%82%B8%E3%82%A7%E3%83%8D%E3%83%AC%E3%83%BC%E3%82%BF%E3%83%BC,mafty_generator" class="twitter-share-button button" target="_new" target="_new">tweet</a>
+    </aside>
+    
     <div class="container">
-        <h3>使い方</h3>
-        <ol>
-            <li>画像ファイルを選択</li>
-            <li>スライダーか数値入力でサイズと位置を調整</li>
-            <li>BBやGB等は透過色を指定してチェックで透過可能 (近似色範囲はHSV Rangeから調整)</li>
-            <li>Logo/Markでロゴなどを追加</li>
-            <li>Startを押すとエンコード開始。<br>
-                メモリ不足である旨の警告が表示された場合は他のタブやアプリを閉じてから試してみてください。</li>
-            <li>動画が表示されたら成功!!</li>
-            <li>動画下のdownloadボタンでダウンロードできます</li>
-        </ol>
+        <details>
+            <summary class="h3-summary">使い方</summary>
+            <ol>
+                <li>Faceで画像ファイルを選択</li>
+                <li>BGMファイルを選択</li>
+                <ul>
+                    <li>未指定の場合はBGM無し</li>
+                    <li>ssで開始位置を指定</li>
+                    <li>CD音源の<b>閃光[Alexandros]</b>の場合<code>01:30.6</code>が目安</li>
+                </ul>
+                <li>スライダー / 数値入力でサイズと位置を調整</li>
+                <li>BBやGB等は透過色を指定してチェックで透過可能 (近似色範囲は<b>HSV Range</b>から調整)</li>
+                <li><b>Logo / Mark</b>でロゴ等を追加</li>
+                <li><b>Start</b>でエンコード開始
+                <ul>
+                    <li>メモリ不足の場合は他のタブやアプリを閉じると動作する場合があります</li>
+                </ul>
+                <li>動画が表示されたら成功!</li>
+                <li>動画下の<b>Download</b>ボタンで保存できます</li>
+            </ol>
+        </details>
     </div>
 
     <form id="adjustEditor" class="adjust-editor">
@@ -50,12 +62,12 @@
                 <button type="reset">Reset</button>
             </div>
             <div>
-                <label>BGM: <input id="bgm" type="file" accept=".mp4,.aac,.m4a"></label> 
-                <label>start: <input id="bgmStart" class="bgm-param" type="number" value="0" step="0.1" min="0"></label>
+                <label>BGM: <input id="bgm" type="file" accept=".mp4,.aac,.m4a"></label>
+                <label>ss: <input id="bgmStart" class="bgm-param" type="text" placeholder="00:00:00"></label>
             </div>
         </div>
-        
-        
+
+
         <div class="ctrl-container">
             <label>
                 Size: <input id="sizeNumber" class="size-number" type="number" value="300" name="size" min="1">
@@ -76,34 +88,35 @@
             </label>
             <button type="button" id="pick">pick</button>
             <input id="transCheck" class="trans" type="checkbox">
-            <input id="transOpen" class="trans-open" type="checkbox">
-            <label for="transOpen" class="trans-open-label"></label>
-            <div id="transOption" class="trans-option">
-                <div>
-                    <label>
-                        H: <input id="hRangeNumber" class="hsv-range-number trans" type="number" max="360" min="0"
-                            step="1" name="hRange" value="10">
-                    </label>
-                    <input id="hRangeSlider" class="hsv-range-slider trans" type="range" max="360" min="0" step="1"
-                        name="hRange" value="20">
+            <details>
+                <summary>HSV Range</summary>
+                <div id="transOption" class="trans-option">
+                    <div>
+                        <label>
+                            H: <input id="hRangeNumber" class="hsv-range-number trans" type="number" max="360" min="0"
+                                step="1" name="hRange" value="10">
+                        </label>
+                        <input id="hRangeSlider" class="hsv-range-slider trans" type="range" max="360" min="0" step="1"
+                            name="hRange" value="20">
+                    </div>
+                    <div>
+                        <label>
+                            S: <input id="sRangeNumber" class="hsv-range-number trans" type="number" max="100" min="0"
+                                step="1" name="sRange" value="20">
+                        </label>
+                        <input id="sRangeSlider" class="hsv-range-slider trans" type="range" max="100" min="0" step="1"
+                            name="sRange" value="20">
+                    </div>
+                    <div>
+                        <label>
+                            V: <input id="vRangeNumber" class="hsv-range-number trans" type="number" max="100" min="0"
+                                step="1" name="vRange" value="20">
+                        </label>
+                        <input id="vRangeSlider" class="hsv-range-slider trans" type="range" max="100" min="0" step="1"
+                            name="vRange" value="20">
+                    </div>
                 </div>
-                <div>
-                    <label>
-                        S: <input id="sRangeNumber" class="hsv-range-number trans" type="number" max="100" min="0"
-                            step="1" name="sRange" value="20">
-                    </label>
-                    <input id="sRangeSlider" class="hsv-range-slider trans" type="range" max="100" min="0" step="1"
-                        name="sRange" value="20">
-                </div>
-                <div>
-                    <label>
-                        V: <input id="vRangeNumber" class="hsv-range-number trans" type="number" max="100" min="0"
-                            step="1" name="vRange" value="20">
-                    </label>
-                    <input id="vRangeSlider" class="hsv-range-slider trans" type="range" max="100" min="0" step="1"
-                        name="vRange" value="20">
-                </div>
-            </div>
+            </details>
         </div>
         <div class="ctrl-container">
             <label>Logo: <input type="checkbox" id="logo"></label>
@@ -131,13 +144,14 @@
         <progress id="progBar" max="1" value="0"></progress>
         <textarea id="logArea" class="log-area" cols="30" rows="10" readonly></textarea>
         <video id="output-video" controls></video>
-        <a id="video-download" download="mafty.mp4"><button type="button">download</button></a>
-        <a href="https://twitter.com/intent/tweet?url=https://kairi003.github.io/mafty-generator/&hashtags=%E5%8F%8D%E7%9C%81%E3%82%92%E4%BF%83%E3%81%99%E3%82%B8%E3%82%A7%E3%83%8D%E3%83%AC%E3%83%BC%E3%82%BF%E3%83%BC,mafty_generator" class="twitter-share-button" target="_new"><button type="button">tweet</button></a>
+        <a id="video-download" class="button" download="mafty.mp4">Download</a>
+        <a href="https://twitter.com/intent/tweet?url=https://kairi003.github.io/mafty-generator/&hashtags=%E5%8F%8D%E7%9C%81%E3%82%92%E4%BF%83%E3%81%99%E3%82%B8%E3%82%A7%E3%83%8D%E3%83%AC%E3%83%BC%E3%82%BF%E3%83%BC,mafty_generator"
+            class="twitter-share-button button" target="_new">tweet</a>
     </div>
 
     <footer>
         <h3>Contacts</h3>
-        <p> 動作情報, Issue, PullRequest等歓迎です!!</p>
+        <p> 動作情報, Issue, PullRequest等歓迎です!</p>
         <ul>
             <li>Twitter: <a href="https://twitter.com/kairi_005">kairi_005</a></li>
             <li>Github: <a href="https://github.com/kairi003/mafty-generator">kairi003/mafty-generator</a></li>

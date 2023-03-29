@@ -1,3 +1,11 @@
+fieldset.adjust-editor {
+  padding: 0;
+  border: none;
+  width: 100%;
+  margin: 0;
+  min-inline-size: auto;
+}
+
 .adjust-editor label {
   display: inline-block;
 }
@@ -76,11 +84,3 @@
   display: none;
 }
 
-summary {
-  cursor: pointer;
-}
-
-.h3-summary {
-  font-size: 1.5em;
-  font-weight: bold;
-}

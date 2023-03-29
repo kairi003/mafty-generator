@@ -10,6 +10,11 @@ body {
   background-color: rgb(252, 252, 255);
 }
 
+h1 {
+  word-break: keep-all;
+  overflow-wrap: break-word;
+}
+
 
 body>* {
   margin-bottom: 1em;
@@ -42,9 +47,7 @@ progress {
 button {
   cursor: pointer;
 }
-.bgm-param {
-  width: 5em;
-}
+
 .input-container, .input-container>* {
   margin: 5px;
 }
@@ -82,4 +85,13 @@ a.button.twitter-share-button {
   color: white;
   border-color: white;
   border-radius: 1em;
+}
+
+summary {
+  cursor: pointer;
+}
+
+.h3-summary {
+  font-size: 1.5em;
+  font-weight: bold;
 }

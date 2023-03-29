@@ -70,7 +70,7 @@ const image2video = async () => {
 
   const bgmBuffer = await document.querySelector('#bgm').files[0]?.arrayBuffer();
   if (bgmBuffer) ffmpeg.FS('writeFile', 'bgm.mp4', new Uint8Array(bgmBuffer));
-  const ss = document.querySelector('#bgmStart').value ?? '0';
+  const ss = document.querySelector('#bgmStart').valueAsNumber / 1000;
 
   message.innerHTML = 'Start transcoding';
   await ffmpeg.run(
@@ -97,8 +97,10 @@ const image2video = async () => {
   message.innerHTML = 'Finish!!';
   logHdlr({ type: 'info', message: 'Finish!!' });
 }
-const elm = document.getElementById('start-btn');
-elm.addEventListener('click', e => {
-  elm.disabled = true;
-  image2video().finally(()=>elm.disabled=false);
+
+
+document.getElementById('startBtn').addEventListener('click', e => {
+  const adjustEditor = document.getElementById('adjustEditor');
+  adjustEditor.disabled = true;
+  image2video().finally(()=>adjustEditor.disabled=false);
 });

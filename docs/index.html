@@ -20,17 +20,19 @@
     <script src="js/adjust-editor.js" defer></script>
     <script src="js/ffmpeg/ffmpeg.min.js" defer></script>
     <script src="js/main.js" defer></script>
+    <script src="js/audition.js" defer></script>
     <title>mafty-generator</title>
 </head>
 
 <body>
-    <h1>反省を促すジェネレーター</h1>
+    <h1>反省を促す<wbr>ジェネレーター</h1>
     <aside role="note" class="attention">
         デバイスのメモリサイズにより動作しない場合があります。<br />
-        <a href="https://github.com/kairi003/mafty-generator#verified-mobile-devices" target="_new">動作確認済みモバイル端末</a>
-        <a href="https://twitter.com/intent/tweet?url=https://kairi003.github.io/mafty-generator/&hashtags=%E5%8F%8D%E7%9C%81%E3%82%92%E4%BF%83%E3%81%99%E3%82%B8%E3%82%A7%E3%83%8D%E3%83%AC%E3%83%BC%E3%82%BF%E3%83%BC,mafty_generator" class="twitter-share-button button" target="_new" target="_new">tweet</a>
+        <a href="https://github.com/kairi003/mafty-generator#verified-mobile-devices" target="_new">
+            動作確認済みモバイル端末
+        </a>
     </aside>
-    
+
     <div class="container">
         <details>
             <summary class="h3-summary">使い方</summary>
@@ -39,31 +41,34 @@
                 <li>BGMファイルを選択</li>
                 <ul>
                     <li>未指定の場合はBGM無し</li>
-                    <li>ssで開始位置を指定</li>
-                    <li>CD音源の<b>閃光[Alexandros]</b>の場合<code>01:30.6</code>が目安</li>
+                    <li>ssで開始位置を指定、再生時間は23.3秒間</li>
+                    <li><b>Audition</b>で試聴</li>
+                    <li>CD音源の<b>閃光[Alexandros]</b>の場合、<code>01:30.6</code>が目安</li>
                 </ul>
                 <li>スライダー / 数値入力でサイズと位置を調整</li>
                 <li>BBやGB等は透過色を指定してチェックで透過可能 (近似色範囲は<b>HSV Range</b>から調整)</li>
                 <li><b>Logo / Mark</b>でロゴ等を追加</li>
                 <li><b>Start</b>でエンコード開始
-                <ul>
-                    <li>メモリ不足の場合は他のタブやアプリを閉じると動作する場合があります</li>
-                </ul>
+                    <ul>
+                        <li>メモリ不足の場合は他のタブやアプリを閉じると動作する場合があります</li>
+                    </ul>
                 <li>動画が表示されたら成功!</li>
                 <li>動画下の<b>Download</b>ボタンで保存できます</li>
             </ol>
         </details>
     </div>
 
-    <form id="adjustEditor" class="adjust-editor">
+    <fieldset id="adjustEditor" class="adjust-editor">
         <div class="input-container">
             <div>
                 <label>Face: <input id="face" type="file" accept="image/*"></label>
                 <button type="reset">Reset</button>
             </div>
             <div>
-                <label>BGM: <input id="bgm" type="file" accept=".mp4,.aac,.m4a"></label>
-                <label>ss: <input id="bgmStart" class="bgm-param" type="text" placeholder="00:00:00"></label>
+                <label class="bgm-label">BGM: <input id="bgm" type="file" accept=".mp4,.aac,.m4a"></label>
+                <label>ss: <input id="bgmStart" class="bgm-param" type="time" step="0.01" value="00:00:00.000"></label>
+                <button id="auditionButton">Audition</button>
+                <audio src id="auditionPlayer"></audio>
             </div>
         </div>
 
@@ -136,10 +141,10 @@
             <img id="logoImg" src="src/logo.png">
             <img id="markImg" src="src/mark.png">
         </div>
-    </form>
+        <button id="startBtn">Start</button>
+    </fieldset>
 
     <div class="container">
-        <button id="start-btn">Start</button>
         <p id="message"></p>
         <progress id="progBar" max="1" value="0"></progress>
         <textarea id="logArea" class="log-area" cols="30" rows="10" readonly></textarea>

@@ -16,7 +16,7 @@ const rgb2hsv = (r, g, b) => {
 const readImage = async e => {
   const face = document.querySelector('#face');
   const file = face.files[0];
-  if (e.type == 'reset' || !file) {
+  if (e?.type == 'reset' || !file) {
     const canvas = document.querySelector('#preview');
     const ctx = canvas.getContext('2d');
     ctx.clearRect(0, 0, canvas.width, canvas.height);

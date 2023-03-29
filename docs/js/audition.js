@@ -30,7 +30,6 @@
       player.src = URL.createObjectURL(file);
       player.currentTime = ss;
       button.textContent = 'Stop';
-      console.log(player.src);
       player.play();
     } else {
       revoke();
